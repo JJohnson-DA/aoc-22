@@ -1,5 +1,5 @@
 #%%
-with open("../data/d1p1.txt", "r") as f:
+with open("../data/d1.txt", "r") as f:
     totals, current = [], 0
     for line in f.readlines():
         if line != "\n":
