@@ -18,7 +18,7 @@ strategy = {
     "c": {"x": "y", "y": "z", "z": "x"},
 }
 
-with open("../data/d2p1.txt", "r") as f:
+with open("../data/d2.txt", "r") as f:
     part_1_score = 0
     part_2_score = 0
     for line in f.readlines():
