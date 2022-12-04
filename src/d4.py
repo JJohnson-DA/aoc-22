@@ -1,11 +1,9 @@
 #%%
 with open("../data/d4.txt", "r") as f:
-    p1_total = 0
-    p2_total = 0
+    p1_total, p2_total = 0, 0
     for pair in f.readlines():
         # ---- Part 1 ----
-        e1 = pair.split(",")[0].split("-")
-        e2 = pair.split(",")[1].split("-")
+        e1, e2 = pair.split(",")[0].split("-"), pair.split(",")[1].split("-")
         e1_range = range(int(e2[0]), int(e2[1]) + 1)
         e2_range = range(int(e1[0]), int(e1[1]) + 1)
         overlap = set(e1_range) & set(e2_range)
