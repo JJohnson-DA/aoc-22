@@ -24,3 +24,5 @@ with open("../data/d3.txt", "r") as f:
         p2_total += letter_dict[overlap.pop()]
         lb += 3
         ub += 3
+
+print(f"Part 1: {p1_total}\nPart 2: {p2_total}")
