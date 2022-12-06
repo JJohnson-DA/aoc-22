@@ -4,8 +4,8 @@ with open("../data/d6.txt", "r") as f:
 
 
 def search(length):
-    lb, ub = 0, length
-    for i in range(len(code)):
+    lb, ub = length, length + length
+    for i in range(length, len(code)):
         if len(set(code[lb:ub])) == length:
             return ub
         lb += 1
