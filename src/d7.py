@@ -8,9 +8,6 @@ structure = {}
 current_dir = []
 
 for line in output:
-    # print(line)
-    # print(f'start: {current_dir}')
-    # print()
     size = 0
     # Remove a level from current directory
     if line.startswith("$ cd .."):
@@ -32,17 +29,4 @@ for line in output:
         for dir in current_dir:
             structure[dir] += size
 
-    # print(f'end: {current_dir}')
-    # for dir in current_dir:
-    #     print(f'{dir} = {structure[dir]}')
-    # print('\n')
-
-total = 0
-for dir, size in structure.items():
-    # print(dir, size)
-    # print(size)
-    if size <= 100000:
-        total += size
-        print(dir, size)
-
-# %%
+total = sum(x for x in structure.values() if x <= 100000)
