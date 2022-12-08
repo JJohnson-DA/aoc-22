@@ -48,6 +48,7 @@ for i in range(len(tracker_T)):
 print(p1_total)
 
 #%% ---- Part 2 ----------------------------------------------------------------
+# first guess 182952
 with open("../data/d8.txt", "r") as f:
     grid = [x.rstrip() for x in f.readlines()]
 
