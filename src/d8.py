@@ -19,8 +19,7 @@ def score_tree(tree, search_space):
     return score, visible
 
 
-max_view = 0
-visible_count = 0
+max_view, vis_count = 0, 0
 
 for row in range(len(grid)):
     for col in range(len(grid[0])):
@@ -41,7 +40,6 @@ for row in range(len(grid)):
         tree_score = left * right * bottom * top
         max_view = max(max_view, tree_score)
         if l_vis or r_vis or t_vis or b_vis:
-            visible_count += 1
+            vis_count += 1
 
-print(f"Part 1: {visible_count}")
-print(f"Part 2: {max_view}")
+print(f"Part 1: {vis_count}\nPart 2: {max_view}")
