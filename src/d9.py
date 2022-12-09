@@ -1,88 +1,50 @@
 #%%
-# 105 too low
 with open("../data/d9.txt") as f:
     steps = [x.rstrip().split() for x in f.readlines()]
 
-# Starting Coordinates
-h, t = [0, 0], [0, 0]
-
 # List to store positions of tail, will convert to set at end to count unique
-coords = list()
+p1_coords, p2_coords = [], []
 
 
-def move_head(direction):
+def move_head(head):
     if direction == "D":
-        h[1] -= 1
+        head[1] -= 1
     elif direction == "U":
-        h[1] += 1
+        head[1] += 1
     elif direction == "L":
-        h[0] -= 1
+        head[0] -= 1
     else:
-        h[0] += 1
+        head[0] += 1
 
 
-def move_tail():
-    # Points overlap
-    if t == h:
+def move_tail(head, tail):
+    offset_x = head[0] - tail[0]
+    offset_y = head[1] - tail[1]
+    # Allowable Diagonal or overlapping
+    if abs(offset_x) <= 1 and abs(offset_y) <= 1:
         pass
-    # Allowable Diagonal
-    elif abs(h[0] - t[0]) == 1 and abs(h[1] - t[1]) == 1:
-        pass
-    # h is to the side of t
-    elif t[1] == h[1] and abs(h[0] - t[0]) > 1:
-        if t[0] > h[0]:
-            t[0] -= 1
-        else:
-            t[0] += 1
-    # h is above or below t
-    elif t[0] == h[0] and abs(h[1] - t[1]) > 1:
-        if t[1] > h[1]:
-            t[1] -= 1
-        else:
-            t[1] += 1
-    # h is diagonal with two side steps
-    elif abs(h[0] - t[0]) == 1 and abs(h[1] - t[1]) > 1:
-        # h is bottom left
-        if t[1] > h[1] and t[0] > h[0]:
-            t[0] -= 1
-            t[1] -= 1
-        # h is top left
-        elif t[1] > h[1] and t[0] < h[0]:
-            t[0] += 1
-            t[1] -= 1
-        # h is top right
-        elif t[1] < h[1] and t[0] < h[0]:
-            t[0] += 1
-            t[1] += 1
-        # h is bottom right
-        else:
-            t[0] -= 1
-            t[1] += 1
-    # h is diagonal with two vertical steps
-    elif abs(h[1] - t[1]) == 1 and abs(h[0] - t[0]) > 1:
-        # h is bottom left
-        if t[0] > h[0] and t[1] > h[1]:
-            t[0] -= 1
-            t[1] -= 1
-        # h is top left
-        elif t[0] > h[0] and t[1] < h[1]:
-            t[0] += 1
-            t[1] -= 1
-        # h is top right
-        elif t[0] < h[0] and t[1] < h[1]:
-            t[0] += 1
-            t[1] += 1
-        # h is bottom right
-        else:
-            t[0] -= 1
-            t[1] += 1
+    # Vertical offset
+    elif abs(offset_y) > 1 and offset_x == 0:
+        tail[1] += offset_y / abs(offset_y)
+    # Horizontal offset
+    elif offset_y == 0 and abs(offset_x) > 1:
+        tail[0] += offset_x / abs(offset_x)
+    # Non-allowable diagonal, increment both by 1 in offset direction
+    else:
+        tail[0] += offset_x / abs(offset_x)
+        tail[1] += offset_y / abs(offset_y)
 
 
-for order in steps:
-    direction = order[0]
-    movements = order[1]
-    move_head(direction)
-    move_tail()
-    coords.append("".join([str(x) for x in t]))
-print(len(set(coords)))
-# %%
+knots = [[0, 0] for i in range(10)]
+
+for step in steps:
+    direction = step[0]
+    movements = int(step[1])
+    for i in range(movements):
+        move_head(knots[0])
+        for i in range(1, len(knots)):
+            move_tail(knots[i - 1], knots[i])
+            p1_coords.append(",".join([str(int(x)) for x in knots[1]]))
+            p2_coords.append(",".join([str(int(x)) for x in knots[-1]]))
+
+print(f"Part 1: {len(set(p1_coords))}\nPart 2: {len(set(p2_coords))}")
